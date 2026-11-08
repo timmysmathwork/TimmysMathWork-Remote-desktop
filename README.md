@@ -1,47 +1,29 @@
-# Relay — Open-Source Remote Desktop (staged project)
+# Relay — staged open-source remote desktop project
 
-Relay is an early-stage cross-platform remote desktop project. The current checked-in deliverable is an **offline, standalone dashboard**—not a remote-control product. It can be opened directly from disk, including with `file://`, without a server or external assets.
+Relay is being built in verified stages. The repository currently contains a standalone dashboard and a native desktop milestone for **user-requested local still-image screen capture**.
 
-## Current status (be precise)
+## What works in this milestone
 
-Implemented now:
-- Responsive dark/light dashboard, with local theme preference.
-- Local device-label/ID records, favorites, and removal using browser local storage.
-- Networking, WISP, security, and capability-status screens that clearly distinguish saved preferences from working transports.
-- No CDN, remote assets, server, or required internet access for the interface.
+- `frontend/index.html`: standalone offline dashboard (file://) for local device labels and preferences.
+- `src-tauri/` + `desktop-ui/`: Tauri 2 / Rust desktop shell. The native backend enumerates displays and captures one still image only when the user explicitly presses Capture. The image is rendered in the same local app window.
+- OSI-approved MIT license and security/development documentation.
 
-Not implemented and **not advertised as working**:
-- Native Tauri/Rust application, screen capture, remote viewing, mouse/keyboard injection, clipboard, monitors, or fullscreen viewer.
-- LAN discovery, WebRTC, STUN/TURN, relays, WISP transport, connection testing, or reconnection.
-- Authentication/pairing backend, encryption protocol, device authorization, update system, installers, or platform permission handling.
-- Windows/macOS builds or the requested interoperability tests.
+The native capture is not transmitted. The native UI reports browser mode when opened outside Tauri; it does not pretend browser capture works.
 
-The Connect and WISP test actions report that the capability is unavailable and do not make a network request. No sessions are fabricated. Do not use this dashboard to enter secrets.
+## Not implemented
 
-## Run the dashboard
+This is **not yet a remote desktop product**. There is no remote screen streaming, mouse/keyboard control, authenticated pairing, cryptographic protocol, clipboard synchronization, LAN discovery, WebRTC/STUN/TURN, WISP, reconnection, connection history, or remote viewer. No Windows/macOS artifacts have been built or tested here. Do not expose this app as a remote service or advertise those features as available.
 
-Open `frontend/index.html` directly in a modern browser. All styles and scripts are local. Data remains in that browser's local storage; clearing browser site data removes it. No build step is needed for this dashboard.
+WISP remains out of scope until an exact, versioned protocol and server implementation are selected. A generic WISP setting is not sufficient for compatibility.
 
-## Development stages
+## Run
 
-The project must be developed and tested in explicit stages before claiming the requested product is complete:
+- Dashboard: open `frontend/index.html` directly in a browser.
+- Native local capture: see `BUILD.md`; requires Rust and target native build prerequisites. macOS screen capture requires user-granted Screen Recording permission.
 
-1. Establish threat model, protocol specifications, platform support matrix, and native application shell.
-2. Implement opt-in local capture and input control with visible consent, OS permission checks, and tests on Windows and macOS.
-3. Add authenticated pairing and cryptographic identity/key lifecycle before any remote-control transport.
-4. Implement a documented transport, then direct LAN and WebRTC with explicitly configured STUN/TURN; test failure and reconnection behavior.
-5. Add WISP only after selecting and documenting the exact compatible implementation and protocol. WISP remains optional.
-6. Add signed platform packaging, permission/signing/notarization documentation, accessibility checks, and end-to-end testing.
+## Architecture and security
 
-No network service should accept unauthenticated control. Do not expose an unauthenticated desktop-control port to the public internet. Any future remote session must require explicit authorization on the controlled computer.
-
-## Repository map
-
-- `frontend/` — standalone dashboard, CSS, and JavaScript.
-- `docs/architecture.md` — proposed boundaries and security requirements, not a claim of implemented functionality.
-- `BUILD.md` — current build/run limitations.
-- `SECURITY.md` — reporting and security scope.
-- `CONTRIBUTING.md` — contribution expectations.
+The native IPC surface is limited to listing monitors and on-demand local capture. It has no network listener or input injection commands. Future remote capability requires threat modeling, authenticated pairing and explicit local approval, secure key lifecycle, reviewed encryption, platform permission UX, and tested transports before adding any remote-control path. See `docs/architecture.md` and `SECURITY.md`.
 
 ## License
 

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Relay — Local Screen Preview</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="top"><a class="brand" href="#">R <span>relay<span class="dot">.</span></span></a><span id="runtime" class="badge">Checking runtime…</span></header>
+    <section class="intro"><div class="eyebrow">NATIVE MILESTONE 01</div><h1>Local screen preview</h1><p>Capture a display on this computer after you explicitly request it. This preview stays on this device; this milestone has no network transport or remote control.</p></section>
+    <section class="toolbar card"><div class="field"><label for="monitor">Display</label><select id="monitor" disabled><option>Loading displays…</option></select></div><button id="refresh" class="secondary" disabled>Refresh displays</button><button id="capture" class="primary" disabled>Capture screen</button></section>
+    <p id="status" class="status" role="status">Checking whether this window is running as a native app…</p>
+    <section class="preview card"><div class="preview-head"><div><strong>Captured image</strong><span id="dimensions">No capture yet</span></div><span class="local-label"><i></i> LOCAL ONLY</span></div><div id="placeholder" class="placeholder"><div class="display-icon">▣</div><strong>No screen image captured</strong><p>Select a display and press Capture screen. Capture occurs only on request.</p></div><img id="screen" alt="Locally captured screen preview" hidden></section>
+    <footer>Relay currently provides local screen capture only. No image is transmitted. No mouse/keyboard control, pairing, encryption protocol, network transport, installer, or remote session is included in this milestone.</footer>
+  </main>
+</body>
+</html>

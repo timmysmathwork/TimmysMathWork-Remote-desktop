@@ -1,15 +1,30 @@
 # Build and test
 
-## Current dashboard
+## Standalone dashboard
 
-No compilation is required. Open `frontend/index.html` directly in a current desktop browser. It uses local CSS and JavaScript only and does not require a web server or internet connection. Test the dashboard manually by adding/removing a device record, toggling favorites and theme, refreshing the page, and checking that the Connect and WISP-test actions clearly report that no connection was attempted.
+Open `frontend/index.html` directly in a modern browser. All assets are local; no build step or network is needed.
 
-## Native builds
+## Native local-capture milestone
 
-There is currently no Rust backend, Tauri shell, Windows installer/portable executable, macOS app bundle, or DMG in this repository. Consequently there are no native build commands, and no native artifact has been built or tested. Do not distribute this dashboard as if it provided remote desktop capabilities.
+This repository now includes a Tauri 2 / Rust desktop shell that can enumerate displays and capture a still image only after the user presses **Capture screen**. The image remains in the local application window. This is not a remote desktop client or host: there is no transport, signaling, pairing, control input, clipboard, or remote session.
 
-A native build pipeline must be added after the native backend and threat model are reviewed. Windows 10/11 x64 packaging should be built and tested on Windows; macOS Intel/Apple Silicon packaging, signing, notarization, screen-recording permission, and accessibility behavior require macOS build/test hosts. Cross-compilation does not replace target-platform permission and interaction testing.
+### Prerequisites
 
-## Required validation before native release
+- Rust stable with the target platform's native toolchain.
+- Tauri 2 prerequisites: WebView2 and Microsoft C++ build tools on Windows; Xcode command-line tools on macOS.
+- For macOS, grant Relay Screen Recording permission in System Settings > Privacy & Security > Screen Recording and restart the app if capture is denied.
 
-Document reproducible builds and test results for each supported OS and architecture. At minimum test authenticated pairing, explicit approval, capture and input permissions, monitor selection, network loss/recovery, LAN, configured WebRTC/STUN/TURN, clipboard consent, and revocation. Test only with devices and accounts you own or are authorized to administer. Never claim an installer exists unless the artifact was actually compiled and tested.
+### Build
+
+From the repository root, install the Tauri CLI if needed (`cargo install tauri-cli --version '^2'`), then run:
+
+```sh
+cargo tauri dev --manifest-path src-tauri/Cargo.toml
+cargo tauri build --manifest-path src-tauri/Cargo.toml
+```
+
+Build on Windows for Windows installers and on macOS for Mac app/DMG artifacts. macOS Intel and Apple Silicon need their respective native targets/toolchains, signing identities, and notarization for distribution. No release artifact is checked in or claimed built/tested by this change.
+
+## Validation
+
+No build was run in the hosted repository-editing environment. Build and manually test on Windows 10/11 x64 and macOS Intel/Apple Silicon before distributing. Verify monitor enumeration, explicit still-image capture, permission-denied messaging, monitor hot-plug/refresh, and that no image leaves the local process. This milestone does not satisfy remote session, authentication, transport, or control tests.
