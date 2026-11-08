@@ -12,10 +12,19 @@
   <main class="shell">
     <header class="top"><a class="brand" href="#">R <span>relay<span class="dot">.</span></span></a><span id="runtime" class="badge">Checking runtime…</span></header>
     <section class="intro"><div class="eyebrow">NATIVE MILESTONE 01</div><h1>Local screen preview</h1><p>Capture a display on this computer after you explicitly request it. This preview stays on this device; this milestone has no network transport or remote control.</p></section>
+    <section class="approval-policy card"><div class="policy-icon">◇</div><div><strong>Connection approval is required</strong><p>When a future authenticated transport sends a connection request, Relay will show the requesting device and requested access here. Nothing proceeds unless you approve it. Requests expire after 60 seconds; timeout and errors deny access.</p><span id="approval-status">No incoming connection service is running.</span></div></section>
     <section class="toolbar card"><div class="field"><label for="monitor">Display</label><select id="monitor" disabled><option>Loading displays…</option></select></div><button id="refresh" class="secondary" disabled>Refresh displays</button><button id="capture" class="primary" disabled>Capture screen</button></section>
     <p id="status" class="status" role="status">Checking whether this window is running as a native app…</p>
     <section class="preview card"><div class="preview-head"><div><strong>Captured image</strong><span id="dimensions">No capture yet</span></div><span class="local-label"><i></i> LOCAL ONLY</span></div><div id="placeholder" class="placeholder"><div class="display-icon">▣</div><strong>No screen image captured</strong><p>Select a display and press Capture screen. Capture occurs only on request.</p></div><img id="screen" alt="Locally captured screen preview" hidden></section>
-    <footer>Relay currently provides local screen capture only. No image is transmitted. No mouse/keyboard control, pairing, encryption protocol, network transport, installer, or remote session is included in this milestone.</footer>
+    <footer>Relay currently provides local screen capture only. No image is transmitted. No mouse/keyboard control, pairing service, network listener, or remote session is included. The approval gate is ready for a future authenticated transport but is not currently receiving connections.</footer>
   </main>
+  <dialog id="approval-dialog" class="approval-dialog" aria-labelledby="approval-title">
+    <div class="dialog-eyebrow">INCOMING CONNECTION · REVIEW CAREFULLY</div>
+    <h2 id="approval-title">Allow this device to connect?</h2>
+    <p class="dialog-warning">Only approve a device and person you recognize. Approval is not authentication; the future transport must already have authenticated this device.</p>
+    <dl class="request-details"><div><dt>Device name</dt><dd id="request-name"></dd></div><div><dt>Device ID</dt><dd id="request-id"></dd></div><div><dt>Operating system</dt><dd id="request-os"></dd></div><div><dt>Requested access</dt><dd id="request-access"></dd></div></dl>
+    <p class="expiry">This request expires in 60 seconds. No response means deny.</p>
+    <div class="dialog-buttons"><button id="deny-request" class="secondary">Deny</button><button id="approve-request" class="primary">Approve request</button></div>
+  </dialog>
 </body>
 </html>
