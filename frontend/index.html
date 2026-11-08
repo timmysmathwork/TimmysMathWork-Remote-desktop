@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Relay — Remote Desktop</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="Relay home"><span class="brand-mark">R</span><span>relay<span class="brand-dot">.</span><small>REMOTE DESKTOP</small></span></a>
+      <div class="nav-label">WORKSPACE</div>
+      <nav id="navigation">
+        <a href="#home" data-page="home" class="nav-item active"><span>⌂</span>Home</a>
+        <a href="#computers" data-page="computers" class="nav-item"><span>▣</span>My computers</a>
+        <a href="#recent" data-page="recent" class="nav-item"><span>◷</span>Recent connections</a>
+        <a href="#favorites" data-page="favorites" class="nav-item"><span>☆</span>Favorites</a>
+      </nav>
+      <div class="nav-label nav-label-spaced">CONFIGURATION</div>
+      <nav>
+        <a href="#networking" data-page="networking" class="nav-item"><span>⌁</span>Networking</a>
+        <a href="#security" data-page="security" class="nav-item"><span>◇</span>Security</a>
+        <a href="#settings" data-page="settings" class="nav-item"><span>⚙</span>General settings</a>
+        <a href="#about" data-page="about" class="nav-item"><span>ⓘ</span>About</a>
+      </nav>
+      <div class="sidebar-footer"><span class="status-dot"></span> Standalone dashboard <span class="offline-tag">OFFLINE</span></div>
+    </aside>
+    <main class="main-area">
+      <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <strong id="crumb">Home</strong></div><div class="top-actions"><span class="mode-pill"><span class="status-dot"></span> HTML mode</span><button class="icon-button" id="theme-toggle" title="Toggle color theme" aria-label="Toggle color theme">☼</button></div></header>
+      <div id="notice" class="notice" role="status" hidden></div>
+      <section id="view" class="view" aria-live="polite"></section>
+    </main>
+  </div>
+  <dialog id="add-dialog" class="dialog">
+    <form id="add-form" method="dialog">
+      <div class="dialog-heading"><div><div class="eyebrow">DEVICE MANAGEMENT</div><h2>Add a computer</h2></div><button class="icon-button" value="cancel" aria-label="Close">×</button></div>
+      <p class="muted">Save a device label and ID locally. This dashboard cannot discover or connect to computers.</p>
+      <label>Computer name<input name="name" maxlength="80" required placeholder="e.g. Studio Mac"></label>
+      <label>Device ID<input name="deviceId" maxlength="100" required placeholder="Enter an ID provided by your trusted device"></label>
+      <div class="dialog-actions"><button class="button secondary" value="cancel">Cancel</button><button class="button primary" value="save">Save device</button></div>
+    </form>
+  </dialog>
+</body>
+</html>
